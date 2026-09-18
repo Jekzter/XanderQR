@@ -28,7 +28,7 @@ func (s *service) Register(req RegisterRequest) (AuthResponse, error) {
 	user := User{
 		Name:      req.Name,
 		Email:     req.Email,
-		Password:  req.Password,
+		Password:  string(hashedPassword),
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
@@ -46,6 +46,24 @@ func (s *service) Register(req RegisterRequest) (AuthResponse, error) {
 
 	return builtAuthResponse(createdUser, token), nil
 
+}
+
+func (s *service) Login(req LoginRequest) (AuthResponse, error) {
+	user, err := s.repo.FindByEmail(req.Email)
+	if err != nil {
+		return AuthResponse{}, ErrInvalidCredential
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+		return AuthResponse{}, ErrInvalidCredential
+	}
+
+	token, err := GenerateToken(user.ID, user.Email)
+	if err != nil {
+		return AuthResponse{}, err
+	}
+
+	return builtAuthResponse(user, token), nil
 }
 
 func builtAuthResponse(user User, token string) AuthResponse {

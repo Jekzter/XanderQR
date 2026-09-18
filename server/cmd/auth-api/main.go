@@ -12,7 +12,8 @@ func main() {
 
 	api := app.Group("/api")
 
-	authHander := auth.NewHandler(auth.NewService(auth.NewRepository()))
-	app.Post("/auth/login", authHandler.Login)
+	authHandler := auth.NewHandler(auth.NewService(auth.NewRepository()))
+	api.Post("/auth/login", authHandler.Login)
+	api.Post("/auth/register", authHandler.Register)
 	log.Fatal(app.Listen(":3001"))
 }
