@@ -1,3 +1,4 @@
+```
 server/ # Root folder of the individual repo
 ├── api/ # OpenAPI/Swagger specs or Protobuf files
 │ └── proto/
@@ -22,5 +23,6 @@ server/ # Root folder of the individual repo
 │
 ├── Dockerfile # Containerization script
 ├── Makefile # Tooling tasks (build, test, lint, proto generation)
-├── go.mod # Go module specifications
+├── go.mod
 └── go.sum
+```
