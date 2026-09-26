@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router";
 import HomePages from "@app/pages/home";
 
-function App() {
+function Router() {
 
   return (
     <Routes>
@@ -10,4 +10,4 @@ function App() {
   )
 }
 
-export default App
+export default Router
